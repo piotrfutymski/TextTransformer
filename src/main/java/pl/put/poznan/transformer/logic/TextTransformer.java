@@ -15,6 +15,10 @@ public class TextTransformer {
         for (String name : transformNames) {
             if(name == "upper")
                  transform = new Upper(transform);
+            else if(name == "expand")
+                 transform = new Expand(transform);
+            else if(name == "collapse")
+                 transform = new Collapse(transform);
             else
                 throw new UnknownTransform(name);
         }

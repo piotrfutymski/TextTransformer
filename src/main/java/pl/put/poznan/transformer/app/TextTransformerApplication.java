@@ -11,12 +11,12 @@ public class TextTransformerApplication {
 
     public static void main(String[] args) {
         String[] settings = new String[2];
-        settings[0]="upper";
-        settings[1]="upper";
+        settings[0]="expand";
+        settings[1]="collapse";
 
         try {
             TextTransformer t = new TextTransformer(settings);
-            System.out.println(t.transform("hej"));
+            System.out.println(t.transform("Panie Doktorze, witam pana NA PRZYKŁAD w szkole i tym podobne"));
         } catch (UnknownTransform exc) {
             System.out.println("Transform " + exc.getTransformName() + " is unknown");
         }

@@ -1,24 +1,24 @@
 package pl.put.poznan.transformer.logic;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import static java.lang.Character.isUpperCase;
-import static java.util.Arrays.asList;
-
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class Expand extends TextDecorator {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Expand(TextTransform t) {
+import static java.lang.Character.isUpperCase;
+import static java.util.Arrays.asList;
+
+public class Collapse extends TextDecorator {
+
+    public Collapse(TextTransform t) {
         super(t);
     }
 
@@ -58,15 +58,15 @@ public class Expand extends TextDecorator {
         for(List<String> equality: expandCollapseList){
             int index;
             copy = text.toLowerCase();
-            while((index = copy.indexOf(equality.get(0))) != - 1) {
-                if((text.substring(index, index + equality.get(0).length())).toUpperCase().equals(text.substring(index, index + equality.get(0).length()))){
-                    text = StringUtils.replaceOnce(text, equality.get(0).toUpperCase(), equality.get(1).toUpperCase());
+            while((index = copy.indexOf(equality.get(1))) != - 1) {
+                if((text.substring(index, index + equality.get(1).length())).toUpperCase().equals(text.substring(index, index + equality.get(1).length()))){
+                    text = StringUtils.replaceOnce(text, equality.get(1).toUpperCase(), equality.get(0).toUpperCase());
                 }
                 else if(isUpperCase(text.charAt(index))){
-                    text = StringUtils.replaceOnceIgnoreCase(text, equality.get(0).substring(0, 1).toUpperCase()+equality.get(0).substring(1), equality.get(1).substring(0, 1).toUpperCase()+equality.get(1).substring(1));
+                    text = StringUtils.replaceOnceIgnoreCase(text, equality.get(1).substring(0, 1).toUpperCase()+equality.get(1).substring(1), equality.get(0).substring(0, 1).toUpperCase()+equality.get(0).substring(1));
                 }
                 else{
-                    text = StringUtils.replaceOnceIgnoreCase(text, equality.get(0), equality.get(1));
+                    text = StringUtils.replaceOnceIgnoreCase(text, equality.get(1), equality.get(0));
                 }
                 copy = text.toLowerCase();
             }
