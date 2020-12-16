@@ -1,0 +1,32 @@
+[
+	{
+		"equality": {
+			"collapsed": "np.",
+			"extended": "na przykład"
+		}
+	},
+	{
+		"equality": {
+			"collapsed": "m.in.",
+			"extended": "między innymi",
+		}
+	},
+	{
+		"equality": {
+			"collapsed": "itd.",
+			"extended:": "i tak dalej"
+		}
+	},
+	{
+		"equality": {
+			"collapsed": "prof.",
+			"extended": "profesor"
+		}
+	},
+	{
+		"equality: {
+			"collapsed": "dr",
+			"extended": "doktor"
+		}
+	}
+]
