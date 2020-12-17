@@ -13,12 +13,16 @@ public class TextTransformer {
     public void configure(String[] transformNames) throws UnknownTransform {
         transform = new Identity();
         for (String name : transformNames) {
-            if(name.equals("upper"))
-                transform = new Upper(transform);
+            if(name == "upper")
+                 transform = new Upper(transform);
             else if(name.equals("inverse"))
                 transform = new Inverse(transform);
             else if(name.equals("numbertotext"))
                 transform = new NumberToText(transform);
+            else if(name == "expand")
+                transform = new Expand(transform);
+            else if(name == "collapse")
+                transform = new Collapse(transform);
             else
                 throw new UnknownTransform(name);
         }
