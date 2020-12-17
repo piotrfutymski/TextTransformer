@@ -1,7 +1,9 @@
 package pl.put.poznan.transformer.logic;
 
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,29 +54,16 @@ public class NumberToText extends TextDecorator
         return translation(number).trim();
     }
     private static String translation(long number) {
-        List<String> ones = Arrays.asList( "", "jeden ", "dwa ", "trzy ", "cztery ",
-                "pięć ", "sześć ", "siedem ", "osiem ", "dziewięć ");
 
-        List<String> teens = Arrays.asList( "", "jedenaście ", "dwanaście ", "trzynaście ",
-                "czternaście ", "piętnaście ", "szesnaście ", "siedemnaście ",
-                "osiemnaście ", "dziewiętnaście ");
+        List<String> ones = readStringList("ones");
 
-        List<String> tens = Arrays.asList( "", "dziesięć ", "dwadzieścia ",
-                "trzydzieści ", "czterdzieści ", "pięćdziesiąt ",
-                "sześćdziesiąt ", "siedemdziesiąt ", "osiemdziesiąt ",
-                "dziewięćdziesiąt ");
+        List<String> teens =readStringList("teens");
 
-        List<String> hundreds = Arrays.asList( "", "sto ", "dwieście ", "trzysta ", "czterysta ",
-                "pięćset ", "sześćset ", "siedemset ", "osiemset ",
-                "dziewięćset ");
+        List<String> tens =readStringList("tens");
 
-        String[][] groups = { { "", "", "" },
-                { "tysiąc ", "tysiące ", "tysięcy " },
-                { "milion ", "miliony ", "milionów " },
-                { "miliard ", "miliardy ", "miliardów " },
-                { "bilion ", "biliony ", "bilionów " },
-                { "biliard ", "biliardy ", "biliardów " },
-                { "trylion ", "tryliony ", "trylionów " }, };
+        List<String> hundreds =readStringList("hundreds");
+
+        List<List<String>> groups =readStringListList("groups");
 
         long j = 0,
                 n = 0,
@@ -110,7 +99,7 @@ public class NumberToText extends TextDecorator
                 k = 0;
                 if (s + d == 0 && g > 0) {
                     j = 0;
-                    result.insert(0, groups[(int) g][(int) k]);
+                    result.insert(0, groups.get((int) g).get((int) k));
                 }
             } else if (j >=2 & j<=4) {
                 k = 1;
@@ -120,7 +109,7 @@ public class NumberToText extends TextDecorator
 
             if (s+d+n+j > 0) {
                 result.insert(0, hundreds.get((int) s) + tens.get((int) d) + teens.get((int) n)
-                        + ones.get((int) j) + groups[(int) g][(int) k]);
+                        + ones.get((int) j) + groups.get((int) g).get((int) k));
             }
 
             number = number / 1000;
@@ -130,33 +119,60 @@ public class NumberToText extends TextDecorator
         result.insert(0, sign);
         return result.toString();
     }
-}
-    /**
-    private void readData(String key){
-        JSONParser jsonParser = new JSONParser();
-        List<String> result = new List<String>;
-        try{
-            String filePath = new File("").getAbsolutePath();
-            FileReader reader = new FileReader(filePath+"\\src\\main\\resources\\NumberToText.json");
-            Object obj = jsonParser.parse(reader);
-            JSONArray equalityList = (JSONArray) obj;
-            for(Object equality: equalityList){
-                JSONObject jsonContainer = (JSONObject) equality;
-                JSONObject jsonEquality = (JSONObject) jsonContainer.get("equality");
-                String collapsed = (String) jsonEquality.get("collapsed");
-                String extended = (String) jsonEquality.get("extended");
-                expandCollapseList.add(new ArrayList<String>(asList(collapsed, extended)));
+    private static List<String> readStringList(String key){
+        List<String> result = new ArrayList<>();
+        JSONArray main = getParseArray("NumberToText.json");
+        if (main == null) return result;
+        for(Object mained: main)
+        {
+            JSONObject jsonContainer = (JSONObject) mained;
+            if (jsonContainer.containsKey(key))
+            {
+                JSONArray array = (JSONArray) jsonContainer.get(key);
+                for (Object o : array) {
+                    result.add((String) o);
+                }
+                return result;
             }
         }
-        catch(FileNotFoundException e){
+        return result;
+    }
+    private static List<List<String>> readStringListList(String key){
+        List<List<String>> result = new ArrayList<>();
+        JSONArray main = getParseArray("NumberToText.json");
+        if (main == null) return result;
+        for(Object mained: main)
+            {
+                JSONObject jsonContainer = (JSONObject) mained;
+                if (jsonContainer.containsKey(key))
+                {
+                    JSONArray array = (JSONArray) jsonContainer.get(key);
+                    for (Object nested : array)
+                    {
+                        JSONArray arrayNested = (JSONArray) nested;
+                        List<String> nestedResult = new ArrayList<>();
+                        for (Object o : arrayNested) {
+                            nestedResult.add((String) o);
+                        }
+                        result.add(nestedResult);
+                    }
+                    return result;
+                }
+            }
+        return result;
+    }
+    private static JSONArray getParseArray(String path){
+        try {
+            JSONParser jsonParser = new JSONParser();
+            String filePath = new File("").getAbsolutePath();
+            FileReader reader;
+            reader = new FileReader(filePath+"\\src\\main\\resources\\" + path);
+            Object obj = jsonParser.parse(reader);
+            return (JSONArray) obj;
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        catch(ParseException e){
-            e.printStackTrace();
-        }
+
     }
 }
-     */
