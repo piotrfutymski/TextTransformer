@@ -1,1 +1,4 @@
 language: Java
+
+script:
+  - mvn test javadoc:javadoc
