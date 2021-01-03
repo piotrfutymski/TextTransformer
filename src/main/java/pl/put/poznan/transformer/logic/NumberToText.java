@@ -28,7 +28,7 @@ public class NumberToText extends TextDecorator
     }
 
     /**
-     * Function transforming number written in digits to number written in words in language polish.
+     * Function transforming number written in digits to number written in words in polish language.
      * @param text is a String in which numbers are to be converted.
      * @return String with numbers converted to words.
      */
@@ -57,13 +57,13 @@ public class NumberToText extends TextDecorator
 
         List<String> ones = readStringList("ones");
 
-        List<String> teens =readStringList("teens");
+        List<String> teens = readStringList("teens");
 
-        List<String> tens =readStringList("tens");
+        List<String> tens = readStringList("tens");
 
-        List<String> hundreds =readStringList("hundreds");
+        List<String> hundreds = readStringList("hundreds");
 
-        List<List<String>> groups =readStringListList("groups");
+        List<List<String>> groups = readStringListList("groups");
 
         long j = 0,
                 n = 0,
