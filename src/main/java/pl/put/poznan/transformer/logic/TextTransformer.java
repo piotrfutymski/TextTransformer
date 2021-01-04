@@ -1,12 +1,26 @@
 package pl.put.poznan.transformer.logic;
 
+/**
+ * TextTransformer allows easy configuration and use of text transformations
+ */
 public class TextTransformer {
     private TextTransform transform;
 
+    /**
+     * Constructs and configures TextTransformer
+     * @param transformNames list of transformation names used for configuration
+     * @throws UnknownTransform at least one of provided transformation names could not be recognized
+     */
     public TextTransformer(String[] transformNames) throws UnknownTransform {
         configure(transformNames);
     }
 
+    /**
+     * Changes currently performed transformation to new one
+     * @param transformNames list of transformation names used for building new text transformation.
+     *                       Listed transformations will be performed in reversed order in the resulting transformation.
+     * @throws UnknownTransform at least one of provided transformation names could not be recognized
+     */
     public void configure(String[] transformNames) throws UnknownTransform {
         transform = new Identity();
         for (String name : transformNames) {
@@ -24,6 +38,12 @@ public class TextTransformer {
                 throw new UnknownTransform(name);
         }
     }
+
+    /**
+     * Performs transformation
+     * @param text input string that will be transformed
+     * @return the result of transformation
+     */
     public String transform(String text){
         return transform.transform(text);
     }
