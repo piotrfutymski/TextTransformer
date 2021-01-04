@@ -26,6 +26,8 @@ public class TextTransformer {
         for (String name : transformNames) {
             if(name.equals("upper"))
                  transform = new Upper(transform);
+            else if(name.equals("lower"))
+                transform = new Lower(transform);
             else if(name.equals("inverse"))
                 transform = new Inverse(transform);
             else if(name.equals("numbertotext"))
