@@ -1,3 +1,12 @@
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/app/TextTransformerApplication.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/logic/TextTransformer.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/rest/TextTransformerController.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/Upper.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/TextDecorator.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/TextTransform.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/NumberToText.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/UnknownTransform.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/Identity.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/Inverse.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/app/TextTransformerApplication.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/Expand.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/Collapse.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/logic/TextTransformer.java
+/home/piotr/Documents/Dev/TextTransformer/src/main/java/pl/put/poznan/transformer/rest/TextTransformerController.java

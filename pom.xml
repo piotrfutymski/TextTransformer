@@ -61,13 +61,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-		   <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-				  <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-				</configuration>
-		  </plugin>
+
 	    <plugin>
     		<groupId>org.apache.maven.plugins</groupId>
    		<artifactId>maven-dependency-plugin</artifactId>
@@ -86,6 +80,20 @@
         		</execution>
     		</executions>
 	</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>
+								pl.put.poznan.transformer.app.TextTransformerApplication
+							</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 	</plugins>
     </build>
 
@@ -101,6 +109,16 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 
 </project>
