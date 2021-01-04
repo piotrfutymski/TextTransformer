@@ -16,6 +16,10 @@ import java.util.List;
 import static java.lang.Character.isUpperCase;
 import static java.util.Arrays.asList;
 
+/**
+ * Provides implementation of collapse operation and a method for reading JSON file containing collapsed and extended versions
+ * of phrases.
+ */
 public class Collapse extends TextDecorator {
 
     public Collapse(TextTransform t) {
@@ -24,6 +28,9 @@ public class Collapse extends TextDecorator {
 
     private List<List<String>> expandCollapseList;
 
+    /**
+     * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
+     */
     private void readExpandCollapseList(){
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();
@@ -52,6 +59,12 @@ public class Collapse extends TextDecorator {
     }
 
     @Override
+    /**
+     * Changes are occurences of pre-definied phrases to their short versions. If
+     * first letter of occurence is upper-case then shorter version of it will also be. If whole occurence is upper-case then
+     * shorter version will be too.
+     * @param text text that has phrases that are meant to be collapsed
+     */
     protected String operation(String text) {
         readExpandCollapseList();
         String copy;

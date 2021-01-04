@@ -1,8 +1,5 @@
 package pl.put.poznan.transformer.logic;
 
-/**
- * This is just an example to show that the logic should be outside the REST service.
- */
 public class TextTransformer {
     private TextTransform transform;
 
@@ -13,25 +10,18 @@ public class TextTransformer {
     public void configure(String[] transformNames) throws UnknownTransform {
         transform = new Identity();
         for (String name : transformNames) {
-            switch (name) {
-                case "upper":
-                    transform = new Upper(transform);
-                    break;
-                case "inverse":
-                    transform = new Inverse(transform);
-                    break;
-                case "numbertotext":
-                    transform = new NumberToText(transform);
-                    break;
-                case "expand":
-                    transform = new Expand(transform);
-                    break;
-                case "collapse":
-                    transform = new Collapse(transform);
-                    break;
-                default:
-                    throw new UnknownTransform(name);
-            }
+            if(name.equals("upper"))
+                 transform = new Upper(transform);
+            else if(name.equals("inverse"))
+                transform = new Inverse(transform);
+            else if(name.equals("numbertotext"))
+                transform = new NumberToText(transform);
+            else if(name.equals("expand"))
+                transform = new Expand(transform);
+            else if(name.equals("collapse"))
+                transform = new Collapse(transform);
+            else
+                throw new UnknownTransform(name);
         }
     }
     public String transform(String text){

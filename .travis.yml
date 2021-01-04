@@ -1,1 +1,21 @@
 language: Java
+
+jobs:
+  include:
+    - stage: GitHub Release
+      script: skip
+      before_deploy:
+        - export GIT_TAG=1.0.$TRAVIS_BUILD_NUMBER
+        - mvn test javadoc:jar
+        - cp target/text-transformer-1.0-javadoc.jar target/javadoc-1.0.jar
+      deploy:
+        provider: releases
+        token: $GITHUB_OAUTH
+        file: 
+          - target/text-transformer-1.0.jar
+          - target/javadoc-1.0.jar
+        edge: true
+        tag_name: $GIT_TAG
+        on:
+          tags: false
+          branch: master

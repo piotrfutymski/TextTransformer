@@ -9,10 +9,11 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.3.RELEASE</version>
     </parent>
-
+		
     <groupId>pl.put.poznan</groupId>
     <artifactId>text-transformer</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
 	<properties>
         <java.version>11</java.version>
@@ -60,7 +61,40 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-        </plugins>
+
+	    <plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+   		<artifactId>maven-dependency-plugin</artifactId>
+   		<executions>
+        		<execution>
+            			<id>copy-dependencies</id>
+            			<phase>prepare-package</phase>
+            			<goals>
+                			<goal>copy-dependencies</goal>
+            			</goals>
+            		<configuration>
+                		<outputDirectory>
+                    			${project.build.directory}
+                		</outputDirectory>
+            		</configuration>
+        		</execution>
+    		</executions>
+	</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>
+								pl.put.poznan.transformer.app.TextTransformerApplication
+							</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+	</plugins>
     </build>
 
     <repositories>
@@ -75,6 +109,16 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 
 </project>

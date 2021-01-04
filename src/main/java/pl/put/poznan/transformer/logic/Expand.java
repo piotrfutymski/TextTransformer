@@ -16,6 +16,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Provides implementation of expand operation and a method for reading JSON file containing collapsed and extended versions
+ * of phrases.
+ */
 public class Expand extends TextDecorator {
 
     public Expand(TextTransform t) {
@@ -24,6 +28,9 @@ public class Expand extends TextDecorator {
 
     private List<List<String>> expandCollapseList;
 
+    /**
+     * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
+     */
     private void readExpandCollapseList(){
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();
@@ -51,6 +58,12 @@ public class Expand extends TextDecorator {
         }
     }
 
+    /**
+     * Changes are occurences of pre-definied phrases to their longer versions. If
+     * first letter of occurence is upper-case then longer version of it will also be. If whole occurence is upper-case then
+     * longer version will be too.
+     * @param text text that has phrases that are meant to be expanded
+     */
     @Override
     protected String operation(String text) {
         readExpandCollapseList();
