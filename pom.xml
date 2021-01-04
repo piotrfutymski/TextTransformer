@@ -9,10 +9,11 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.3.RELEASE</version>
     </parent>
-
+		
     <groupId>pl.put.poznan</groupId>
     <artifactId>text-transformer</artifactId>
     <version>0.1</version>
+    <packaging>jar</packaging>
 
 	<properties>
         <java.version>11</java.version>
@@ -67,7 +68,25 @@
 				  <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 				</configuration>
 		  </plugin>
-		</plugins>
+	    <plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+   		<artifactId>maven-dependency-plugin</artifactId>
+   		<executions>
+        		<execution>
+            			<id>copy-dependencies</id>
+            			<phase>prepare-package</phase>
+            			<goals>
+                			<goal>copy-dependencies</goal>
+            			</goals>
+            		<configuration>
+                		<outputDirectory>
+                    			${project.build.directory}
+                		</outputDirectory>
+            		</configuration>
+        		</execution>
+    		</executions>
+	</plugin>
+	</plugins>
     </build>
 
     <repositories>
