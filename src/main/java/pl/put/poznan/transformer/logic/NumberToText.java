@@ -4,13 +4,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +23,14 @@ import java.util.regex.Pattern;
  */
 public class NumberToText extends TextDecorator
 {
+
+    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
+
+    private static List<String> ones;
+    private static List<String> teens;
+    private static List<String> tens;
+    private static List<String> hundreds;
+    private static List<List<String>> groups;
     public NumberToText(TextTransform t) {
         super(t);
     }
@@ -37,42 +45,82 @@ public class NumberToText extends TextDecorator
         return replace(text);
     }
 
-    private static String replace(String s) {
+    private static String replace(String s)
+    {
+        logger.debug("Transformation numberToText started.");
+        if (LoadResources())
+        {
+            logger.error("Error: Resources not loaded. Transformation failed.");
+            return s;
+        }
+        else
+            logger.debug("All resources loaded successfully.");
         StringBuilder result = new StringBuilder();
         Pattern p = Pattern.compile("-?\\d+");
         Matcher m = p.matcher(s);
         while (m.find())
         {
             m.appendReplacement(result,toText(m.group()));
+            logger.debug("Number was found and transformed to word.");
         }
         m.appendTail(result);
+        logger.debug("Transformation numberToText completed.");
         return result.toString();
     }
 
-    private static String toText(String group) {
+    private static String toText(String group)
+    {
         long number = Long.parseLong(group);
         return translation(number).trim();
     }
-    private static String translation(long number) {
 
-        List<String> ones = readStringList("ones");
+    private static boolean LoadResources()
+    {
+        ones = readStringList("ones");
+        if (ones.isEmpty())
+        {
+            logger.error("Error: resource 'ones' not loaded.");
+            return true;
+        }
 
-        List<String> teens = readStringList("teens");
+        teens = readStringList("teens");
+        if (ones.isEmpty())
+        {
+            logger.error("Error: resource 'ones' not loaded.");
+            return true;
+        }
 
-        List<String> tens = readStringList("tens");
+        tens = readStringList("tens");
+        if (tens.isEmpty())
+        {
+            logger.error("Error: resource 'tens' not loaded.");
+            return true;
+        }
 
-        List<String> hundreds = readStringList("hundreds");
+        hundreds = readStringList("hundreds");
+        if (hundreds.isEmpty())
+        {
+            logger.error("Error: resource 'hundreds' not loaded.");
+            return true;
+        }
 
-        List<List<String>> groups = readStringListList("groups");
+        groups = readStringListList("groups");
+        if (groups.isEmpty())
+        {
+            logger.error("Error: resource 'groups' not loaded.");
+            return true;
+        }
 
-        long j = 0,
-                n = 0,
-                d = 0,
-                s = 0,
-                g = 0,
-                k = 0;
+        return false;
+    }
+    private static String translation(long number)
+    {
+        // jednostki, nastki (specjalny przypadek), dziesietne, setne, grupy, koncowki
+        long j, n, d, s, g = 0, k;
         StringBuilder result = new StringBuilder();
         String sign = "";
+
+
 
         if (number < 0) {
             sign = "minus ";

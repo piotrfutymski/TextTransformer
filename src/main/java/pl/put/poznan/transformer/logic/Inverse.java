@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import static java.lang.Character.isUpperCase;
 import static java.lang.Character.toLowerCase;
@@ -11,6 +14,8 @@ import static java.lang.Character.toUpperCase;
  */
 public class Inverse extends TextDecorator
 {
+    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
+
     public Inverse(TextTransform t) {
         super(t);
     }
@@ -21,15 +26,17 @@ public class Inverse extends TextDecorator
      * @return inverted String.
      */
     @Override
-    protected String operation(String text) {
-
-        ArrayList<Boolean> isUpper = new ArrayList<Boolean>();
+    protected String operation(String text)
+    {
+        logger.debug("Transformation inverse started.");
+        ArrayList<Boolean> isUpper = new ArrayList<>();
         for (int i = 0; i < text.length(); i++){
             if (isUpperCase(text.charAt(i)))
                 isUpper.add(true);
             else
                 isUpper.add(false);
         }
+        logger.debug("Sizes array completed.");
         StringBuilder sbr = new StringBuilder();
         // Reversing String
         for (int i = 0; i < text.length(); i++)
@@ -40,6 +47,8 @@ public class Inverse extends TextDecorator
             else
                 sbr.append(toLowerCase(ch));
         }
+        logger.debug("String reversion completed.");
+        logger.debug("Transformation inverse completed.");
         return sbr.toString();
     }
 }
