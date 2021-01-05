@@ -30,6 +30,8 @@ public class TextTransformer {
                 transform = new Lower(transform);
             else if(name.equals("inverse"))
                 transform = new Inverse(transform);
+            else if(name.equals("capitalize"))
+                transform = new Capitalize(transform);
             else if(name.equals("numbertotext"))
                 transform = new NumberToText(transform);
             else if(name.equals("expand"))
