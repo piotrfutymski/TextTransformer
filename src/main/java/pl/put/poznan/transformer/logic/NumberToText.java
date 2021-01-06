@@ -214,7 +214,7 @@ public class NumberToText extends TextDecorator
             JSONParser jsonParser = new JSONParser();
             String filePath = new File("").getAbsolutePath();
             FileReader reader;
-            reader = new FileReader(filePath+"\\src\\main\\resources\\" + path);
+            reader = new FileReader("resources/NumberToText.json");
             Object obj = jsonParser.parse(reader);
             return (JSONArray) obj;
         } catch (IOException | ParseException e) {

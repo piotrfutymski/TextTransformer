@@ -40,8 +40,8 @@ public class Collapse extends TextDecorator {
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();
         try{
-            String filePath = new File("").getAbsolutePath();
-            FileReader reader = new FileReader(filePath+"\\src\\main\\resources\\expand-collapse.json");
+            //String filePath = new File("").getAbsolutePath();
+            FileReader reader = new FileReader("resources/expand-collapse.json");
             Object obj = jsonParser.parse(reader);
             JSONArray equalityList = (JSONArray) obj;
             for(Object equality: equalityList){
