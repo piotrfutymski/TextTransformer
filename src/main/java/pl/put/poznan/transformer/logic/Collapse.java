@@ -8,10 +8,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +38,8 @@ public class Collapse extends TextDecorator {
         JSONParser jsonParser = new JSONParser();
         try{
             //String filePath = new File("").getAbsolutePath();
-            FileReader reader = new FileReader("resources/expand-collapse.json");
+            InputStream input = getClass().getResourceAsStream("/expand-collapse.json");
+            Reader reader = new InputStreamReader(input);
             Object obj = jsonParser.parse(reader);
             JSONArray equalityList = (JSONArray) obj;
             for(Object equality: equalityList){

@@ -36,7 +36,7 @@ public class Expand extends TextDecorator {
         JSONParser jsonParser = new JSONParser();
         try{
             //String filePath = new File("").getAbsolutePath();
-            InputStream input = getClass().getResourceAsStream("resources/expand-collapse.json");
+            InputStream input = getClass().getResourceAsStream("/expand-collapse.json");
             Reader reader = new InputStreamReader(input);
             Object obj = jsonParser.parse(reader);
             JSONArray equalityList = (JSONArray) obj;
