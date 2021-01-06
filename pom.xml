@@ -56,6 +56,11 @@
 
 
     <build>
+		<resources>         
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
