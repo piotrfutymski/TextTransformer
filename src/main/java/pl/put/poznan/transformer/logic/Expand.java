@@ -1,11 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 import static java.lang.Character.isUpperCase;
 import static java.util.Arrays.asList;
@@ -39,7 +36,8 @@ public class Expand extends TextDecorator {
         JSONParser jsonParser = new JSONParser();
         try{
             //String filePath = new File("").getAbsolutePath();
-            FileReader reader = new FileReader("resources/expand-collapse.json");
+            InputStream input = getClass().getResourceAsStream("resources/expand-collapse.json");
+            Reader reader = new InputStreamReader(input);
             Object obj = jsonParser.parse(reader);
             JSONArray equalityList = (JSONArray) obj;
             for(Object equality: equalityList){
@@ -49,6 +47,7 @@ public class Expand extends TextDecorator {
                 String extended = (String) jsonEquality.get("extended");
                 expandCollapseList.add(new ArrayList<String>(asList(collapsed, extended)));
             }
+            reader.close();
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
