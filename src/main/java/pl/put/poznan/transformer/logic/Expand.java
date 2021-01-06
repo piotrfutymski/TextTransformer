@@ -25,12 +25,12 @@ public class Expand extends TextDecorator {
         super(t);
     }
     private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
-    private List<List<String>> expandCollapseList;
+    public List<List<String>> expandCollapseList;
 
     /**
      * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
      */
-    private void readExpandCollapseList(){
+    public void readExpandCollapseList(){
         logger.debug("Reading from JSON file started.");
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();

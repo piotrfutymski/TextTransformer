@@ -7,9 +7,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -213,8 +211,10 @@ public class NumberToText extends TextDecorator
         try {
             JSONParser jsonParser = new JSONParser();
             String filePath = new File("").getAbsolutePath();
-            FileReader reader;
+            Reader reader;
             reader = new FileReader("resources/NumberToText.json");
+            InputStream input = NumberToText.class.getResourceAsStream("/expand-collapse.json");
+            reader = new InputStreamReader(input);
             Object obj = jsonParser.parse(reader);
             return (JSONArray) obj;
         } catch (IOException | ParseException e) {
