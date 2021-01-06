@@ -47,6 +47,7 @@ public class TextTransformerController {
         } catch (UnknownTransform exc) {
             System.out.println("Transform " + exc.getTransformName() + " is unknown");
         }
+        logger.info("Transforms completed.");
         return "{\"result\": \" " + transformer.transform(text) + "\"}";
     }
 
