@@ -211,10 +211,8 @@ public class NumberToText extends TextDecorator
         try {
             JSONParser jsonParser = new JSONParser();
             String filePath = new File("").getAbsolutePath();
-            Reader reader;
-            reader = new FileReader("resources/NumberToText.json");
-            InputStream input = NumberToText.class.getResourceAsStream("/expand-collapse.json");
-            reader = new InputStreamReader(input);
+            InputStream input = NumberToText.class.getResourceAsStream("/NumberToText.json");
+            Reader reader = new InputStreamReader(input);
             Object obj = jsonParser.parse(reader);
             return (JSONArray) obj;
         } catch (IOException | ParseException e) {
