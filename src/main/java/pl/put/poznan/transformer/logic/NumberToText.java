@@ -216,7 +216,7 @@ public class NumberToText extends TextDecorator
             Object obj = jsonParser.parse(reader);
             return (JSONArray) obj;
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            logger.error(e.toString());
             return null;
         }
 
