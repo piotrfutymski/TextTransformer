@@ -15,6 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides implementation of expand operation and a method for reading JSON file containing collapsed and extended versions
@@ -25,13 +27,14 @@ public class Expand extends TextDecorator {
     public Expand(TextTransform t) {
         super(t);
     }
-
+    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
     private List<List<String>> expandCollapseList;
 
     /**
      * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
      */
     private void readExpandCollapseList(){
+        logger.debug("Reading from JSON file started.");
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();
         try{
@@ -56,6 +59,7 @@ public class Expand extends TextDecorator {
         catch(ParseException e){
             e.printStackTrace();
         }
+        logger.debug("Reading from JSON file finished.");
     }
 
     /**
@@ -68,10 +72,12 @@ public class Expand extends TextDecorator {
     protected String operation(String text) {
         readExpandCollapseList();
         String copy;
+        logger.debug("Expand operation started.");
         for(List<String> equality: expandCollapseList){
             int index;
             copy = text.toLowerCase();
             while((index = copy.indexOf(equality.get(0))) != - 1) {
+                logger.debug("Occurence found at index: " + index);
                 if((text.substring(index, index + equality.get(0).length())).toUpperCase().equals(text.substring(index, index + equality.get(0).length()))){
                     text = StringUtils.replaceOnce(text, equality.get(0).toUpperCase(), equality.get(1).toUpperCase());
                 }
@@ -84,6 +90,7 @@ public class Expand extends TextDecorator {
                 copy = text.toLowerCase();
             }
         }
+        logger.debug("Expanded text created.");
         return text;
     }
 }

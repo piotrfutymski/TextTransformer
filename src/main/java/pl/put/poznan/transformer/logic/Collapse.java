@@ -5,6 +5,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +17,8 @@ import java.util.List;
 
 import static java.lang.Character.isUpperCase;
 import static java.util.Arrays.asList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides implementation of collapse operation and a method for reading JSON file containing collapsed and extended versions
@@ -25,13 +29,14 @@ public class Collapse extends TextDecorator {
     public Collapse(TextTransform t) {
         super(t);
     }
-
+    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
     private List<List<String>> expandCollapseList;
 
     /**
      * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
      */
     private void readExpandCollapseList(){
+        logger.debug("Reading from JSON file started.");
         expandCollapseList = new ArrayList<List<String>>();
         JSONParser jsonParser = new JSONParser();
         try{
@@ -56,6 +61,7 @@ public class Collapse extends TextDecorator {
         catch(ParseException e){
             e.printStackTrace();
         }
+        logger.debug("Reading from JSON file finished.");
     }
 
     @Override
@@ -68,10 +74,12 @@ public class Collapse extends TextDecorator {
     protected String operation(String text) {
         readExpandCollapseList();
         String copy;
+        logger.debug("Collapse operation started.");
         for(List<String> equality: expandCollapseList){
             int index;
             copy = text.toLowerCase();
             while((index = copy.indexOf(equality.get(1))) != - 1) {
+                logger.debug("Occurence found at index: " + index);
                 if((text.substring(index, index + equality.get(1).length())).toUpperCase().equals(text.substring(index, index + equality.get(1).length()))){
                     text = StringUtils.replaceOnce(text, equality.get(1).toUpperCase(), equality.get(0).toUpperCase());
                 }
@@ -84,6 +92,7 @@ public class Collapse extends TextDecorator {
                 copy = text.toLowerCase();
             }
         }
+        logger.debug("Collapsed text created.");
         return text;
     }
 }
