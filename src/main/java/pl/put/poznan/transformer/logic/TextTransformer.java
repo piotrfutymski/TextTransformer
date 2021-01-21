@@ -38,6 +38,10 @@ public class TextTransformer {
                 transform = new Expand(transform);
             else if(name.equals("collapse"))
                 transform = new Collapse(transform);
+            else if(name.equals("mathtexttosymbol"))
+                transform = new MathTextToSymbol(transform);
+            else if(name.equals("symboltomathtext"))
+                transform = new SymbolToMathText(transform);
             else
                 throw new UnknownTransform(name);
         }

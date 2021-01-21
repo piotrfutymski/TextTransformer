@@ -1,0 +1,86 @@
+[
+  {
+    "equality": {
+      "text": " większe niż ",
+      "symbol": ">"
+    }
+  },
+  {
+    "equality": {
+      "text": " mniejsze niż ",
+      "symbol": "<"
+    }
+  },
+  {
+    "equality": {
+      "text": " większe od ",
+      "symbol": ">"
+    }
+  },
+  {
+    "equality": {
+      "text": " mniejsze od ",
+      "symbol": "<"
+    }
+  },
+  {
+    "equality": {
+      "text": " większe, równe ",
+      "symbol": ">="
+    }
+  },
+  {
+    "equality": {
+      "text": " mniejsze, równe ",
+      "symbol": "<="
+    }
+  },
+  {
+    "equality": {
+      "text": " równe ",
+      "symbol": "="
+    }
+  },
+  {
+    "equality": {
+      "text": " nie równe ",
+      "symbol": "!="
+    }
+  },
+  {
+    "equality": {
+      "text": " dodać ",
+      "symbol": "+"
+    }
+  },
+  {
+    "equality": {
+      "text": " plus ",
+      "symbol": "+"
+    }
+  },
+  {
+    "equality": {
+      "text": " minus ",
+      "symbol": "-"
+    }
+  },
+  {
+    "equality": {
+      "text": " odjąć ",
+      "symbol": "-"
+    }
+  },
+  {
+    "equality": {
+      "text": " razy ",
+      "symbol": "*"
+    }
+  },
+  {
+    "equality": {
+      "text": " podzielić przez ",
+      "symbol": "/"
+    }
+  }
+]
