@@ -29,7 +29,7 @@ class MathTextToSymbolTest {
 
     @Test
     void testOperationLess() {
-        assertEquals("<", texttosymbol.operation(" mniejsze od "));
+        assertEquals("<", texttosymbol.operation(" mniejsze "));
     }
 
     @Test
