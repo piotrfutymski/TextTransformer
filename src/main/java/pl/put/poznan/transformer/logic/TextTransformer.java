@@ -42,6 +42,8 @@ public class TextTransformer {
                 transform = new MathTextToSymbol(transform);
             else if(name.equals("symboltomathtext"))
                 transform = new SymbolToMathText(transform);
+            else if(name.equals("latexescape"))
+                transform = new LatexEscape(transform);
             else
                 throw new UnknownTransform(name);
         }
