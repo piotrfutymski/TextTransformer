@@ -13,13 +13,13 @@
   },
   {
     "equality": {
-      "text": " większe od ",
+      "text": " większe ",
       "symbol": ">"
     }
   },
   {
     "equality": {
-      "text": " mniejsze od ",
+      "text": " mniejsze ",
       "symbol": "<"
     }
   },
