@@ -23,7 +23,6 @@ public class TextTransformerController {
         logger.debug(text);
         logger.debug(Arrays.toString(transforms));
 
-
         TextTransformer transformer = null;
         try {
             transformer = new TextTransformer(transforms);
@@ -50,8 +49,6 @@ public class TextTransformerController {
         logger.info("Transforms completed.");
         return "{\"result\": \"" + transformer.transform(text) + "\"}";
     }
-
-
 
 }
 
