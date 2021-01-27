@@ -1,4 +1,16 @@
 [
+   {
+    "equality": {
+      "text": " większe, równe ",
+      "symbol": ">="
+    }
+  },
+  {
+    "equality": {
+      "text": " mniejsze, równe ",
+      "symbol": "<="
+    }
+  },
   {
     "equality": {
       "text": " większe niż ",
@@ -21,18 +33,6 @@
     "equality": {
       "text": " mniejsze od ",
       "symbol": "<"
-    }
-  },
-  {
-    "equality": {
-      "text": " większe, równe ",
-      "symbol": ">="
-    }
-  },
-  {
-    "equality": {
-      "text": " mniejsze, równe ",
-      "symbol": "<="
     }
   },
   {
