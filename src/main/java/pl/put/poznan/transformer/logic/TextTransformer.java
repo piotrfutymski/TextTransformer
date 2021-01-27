@@ -24,28 +24,43 @@ public class TextTransformer {
     public void configure(String[] transformNames) throws UnknownTransform {
         transform = new Identity();
         for (String name : transformNames) {
-            if(name.equals("upper"))
-                 transform = new Upper(transform);
-            else if(name.equals("lower"))
-                transform = new Lower(transform);
-            else if(name.equals("inverse"))
-                transform = new Inverse(transform);
-            else if(name.equals("capitalize"))
-                transform = new Capitalize(transform);
-            else if(name.equals("numbertotext"))
-                transform = new NumberToText(transform);
-            else if(name.equals("expand"))
-                transform = new Expand(transform);
-            else if(name.equals("collapse"))
-                transform = new Collapse(transform);
-            else if(name.equals("mathtexttosymbol"))
-                transform = new MathTextToSymbol(transform);
-            else if(name.equals("symboltomathtext"))
-                transform = new SymbolToMathText(transform);
-            else if(name.equals("latexescape"))
-                transform = new LatexEscape(transform);
-            else
-                throw new UnknownTransform(name);
+            switch (name) {
+                case "upper":
+                    transform = new Upper(transform);
+                    break;
+                case "lower":
+                    transform = new Lower(transform);
+                    break;
+                case "inverse":
+                    transform = new Inverse(transform);
+                    break;
+                case "capitalize":
+                    transform = new Capitalize(transform);
+                    break;
+                case "numbertotext":
+                    transform = new NumberToText(transform);
+                    break;
+                case "expand":
+                    transform = new Expand(transform);
+                    break;
+                case "collapse":
+                    transform = new Collapse(transform);
+                    break;
+                case "mathtexttosymbol":
+                    transform = new MathTextToSymbol(transform);
+                    break;
+                case "symboltomathtext":
+                    transform = new SymbolToMathText(transform);
+                    break;
+                case "latexescape":
+                    transform = new LatexEscape(transform);
+                    break;
+                case "duplicatedelete":
+                    transform = new DuplicateDelete(transform);
+                    break;
+                default:
+                    throw new UnknownTransform(name);
+            }
         }
     }
 
