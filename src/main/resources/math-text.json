@@ -1,25 +1,13 @@
 [
-   {
-    "equality": {
-      "text": " większe, równe ",
-      "symbol": ">="
-    }
-  },
   {
     "equality": {
-      "text": " mniejsze, równe ",
-      "symbol": "<="
-    }
-  },
-  {
-    "equality": {
-      "text": " większe niż ",
+      "text": " większe ",
       "symbol": ">"
     }
   },
   {
     "equality": {
-      "text": " mniejsze niż ",
+      "text": " mniejsze ",
       "symbol": "<"
     }
   },
