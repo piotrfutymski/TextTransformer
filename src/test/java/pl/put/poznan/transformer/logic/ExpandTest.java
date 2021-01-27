@@ -15,27 +15,34 @@ public class ExpandTest {
 
     @BeforeEach
     void setUp(){
-        textTransform = new Identity();
+        textTransform = mock(TextTransform.class);
+        when(textTransform.transform(anyString())).thenAnswer(
+                new Answer() {
+                    public Object answer(InvocationOnMock invocation) {
+                        String text = (String)invocation.getArguments()[0];
+                        return text;
+                    }
+                });
         expand = new Expand(textTransform);
     }
 
     @Test
-    void testOperation(){
+    void testOperationAllLower(){
         assertEquals("na przykład", expand.operation("np."));
     }
 
     @Test
-    void testOperation2(){
+    void testOperationFirstLetterCapital(){
         assertEquals("I tym podobne", expand.operation("Itp."));
     }
 
     @Test
-    void testOperation3(){
+    void testOperationAllUpper(){
         assertEquals("I TAK DALEJ", expand.transform("ITD."));
     }
 
     @Test
-    void testOperation4(){
+    void testOperationNoChange(){
         assertEquals("Tu nie ma nic do zmiany i t d.", expand.transform("Tu nie ma nic do zmiany i t d."));
     }
 

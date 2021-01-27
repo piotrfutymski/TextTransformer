@@ -49,7 +49,7 @@ public class LatexEscape extends TextDecorator {
             Reader reader = new InputStreamReader(input);
             JSONArray charMap = (JSONArray)jsonParser.parse(reader);
             for(Object it: charMap){
-                JSONObject jContainer = (JSONObject) it;//(String) jContainer.get("from");
+                JSONObject jContainer = (JSONObject) it;
                 latexCharMap.put((String)jContainer.get("from"), (String) jContainer.get("to"));
             }
             reader.close();
