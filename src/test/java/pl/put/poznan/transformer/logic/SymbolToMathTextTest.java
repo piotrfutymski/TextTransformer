@@ -31,7 +31,7 @@ class SymbolToMathTextTest {
 
     @Test
     void testOperationMoreEqual() {
-        assertEquals(" większe, równe ", symboltotext.operation(">="));
+        assertEquals(" większe  równe ", symboltotext.operation(">="));
     }
 
     @Test
