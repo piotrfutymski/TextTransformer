@@ -13,18 +13,6 @@
   },
   {
     "equality": {
-      "text": " większe ",
-      "symbol": ">"
-    }
-  },
-  {
-    "equality": {
-      "text": " mniejsze ",
-      "symbol": "<"
-    }
-  },
-  {
-    "equality": {
       "text": " równe ",
       "symbol": "="
     }
