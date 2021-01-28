@@ -36,7 +36,7 @@ class SymbolToMathTextTest {
                 new String[]{" większe ", ">"},
                 new String[]{" mniejsze ", "<"},
                 new String[]{" równe ","="},
-                new String[]{" nie równe ","!="},
+                new String[]{" nie","!"},
                 new String[]{" dodać ", "+"},
                 new String[]{" plus ", "+"},
                 new String[]{" minus ", "-"},
