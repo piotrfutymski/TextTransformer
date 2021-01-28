@@ -21,7 +21,7 @@ public class JSONLoader {
     /**
      * Returns data from currently read file
      *
-     * @return List<List < String>>>
+     * @return two-dimensional list of read items from JSON file
      */
     public List<List<String>> getJSONList() {
         return JSONList;
