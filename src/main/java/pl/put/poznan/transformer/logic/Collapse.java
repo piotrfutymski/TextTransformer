@@ -26,41 +26,13 @@ public class Collapse extends TextDecorator {
     public Collapse(TextTransform t) {
         super(t);
     }
-    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
-    private List<List<String>> expandCollapseList;
-
-    /**
-     * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
-     */
-    private void readExpandCollapseList(){
-        logger.debug("Reading from JSON file started.");
-        expandCollapseList = new ArrayList<List<String>>();
-        JSONParser jsonParser = new JSONParser();
-        try{
-            //String filePath = new File("").getAbsolutePath();
-            InputStream input = getClass().getResourceAsStream("/expand-collapse.json");
-            Reader reader = new InputStreamReader(input);
-            Object obj = jsonParser.parse(reader);
-            JSONArray equalityList = (JSONArray) obj;
-            for(Object equality: equalityList){
-                JSONObject jsonContainer = (JSONObject) equality;
-                JSONObject jsonEquality = (JSONObject) jsonContainer.get("equality");
-                String collapsed = (String) jsonEquality.get("collapsed");
-                String extended = (String) jsonEquality.get("extended");
-                expandCollapseList.add(new ArrayList<String>(asList(collapsed, extended)));
-            }
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        catch(ParseException e){
-            e.printStackTrace();
-        }
-        logger.debug("Reading from JSON file finished.");
+    public Collapse(TextTransform t, JSONLoader loader) {
+        super(t);
+        this.loader = loader;
     }
+    private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
+    private JSONLoader loader;
+    private List<List<String>> expandCollapseList;
 
     @Override
     /**
@@ -70,7 +42,11 @@ public class Collapse extends TextDecorator {
      * @param text text that has phrases that are meant to be collapsed
      */
     protected String operation(String text) {
-        readExpandCollapseList();
+        if(this.loader == null){
+            loader = new JSONLoader();
+            loader.readExpandCollapseList();
+        }
+        expandCollapseList = loader.getJSONList();
         String copy;
         logger.debug("Collapse operation started.");
         for(List<String> equality: expandCollapseList){

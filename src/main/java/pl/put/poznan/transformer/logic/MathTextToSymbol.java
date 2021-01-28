@@ -19,42 +19,13 @@ public class MathTextToSymbol extends TextDecorator{
     public MathTextToSymbol(TextTransform t) {
         super(t);
     }
-    private static final Logger logger = LoggerFactory.getLogger(MathTextToSymbol.class);
-    public List<List<String>> mathTextList;
-
-    /**
-     * Reads math-text.json file. Sets private class variable mathTextList.
-     */
-    public void readExpandCollapseList(){
-        logger.debug("Reading from JSON file started.");
-        mathTextList = new ArrayList<List<String>>();
-        JSONParser jsonParser = new JSONParser();
-        try{
-            //String filePath = new File("").getAbsolutePath();
-            InputStream input = getClass().getResourceAsStream("/math-text.json");
-            Reader reader = new InputStreamReader(input);
-            Object obj = jsonParser.parse(reader);
-            JSONArray equalityList = (JSONArray) obj;
-            for(Object equality: equalityList){
-                JSONObject jsonContainer = (JSONObject) equality;
-                JSONObject jsonEquality = (JSONObject) jsonContainer.get("equality");
-                String text = (String) jsonEquality.get("text");
-                String symbol = (String) jsonEquality.get("symbol");
-                mathTextList.add(new ArrayList<String>(asList(text, symbol)));
-            }
-            reader.close();
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        catch(ParseException e){
-            e.printStackTrace();
-        }
-        logger.debug("Reading from JSON file finished.");
+    public MathTextToSymbol(TextTransform t, JSONLoader loader) {
+        super(t);
+        this.loader = loader;
     }
+    private static final Logger logger = LoggerFactory.getLogger(MathTextToSymbol.class);
+    private JSONLoader loader;
+    public List<List<String>> mathTextList;
 
     /**
      * Changes math text to symbol
@@ -62,9 +33,13 @@ public class MathTextToSymbol extends TextDecorator{
      */
     @Override
     protected String operation(String text) {
-        readExpandCollapseList();
+        if(this.loader == null){
+            loader = new JSONLoader();
+            loader.readMathTextList();
+        }
+        mathTextList = loader.getJSONList();
         String copy;
-        logger.debug("Expand operation started.");
+        logger.debug("Math to symbol operation started.");
         for(List<String> equality: mathTextList){
             int index;
             copy = text.toLowerCase();

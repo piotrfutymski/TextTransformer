@@ -14,12 +14,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class SymbolToMathTextTest {
+class CollapseTest {
     private TextTransform textTransform;
-    private SymbolToMathText symboltotext;
+    private Collapse collapse;
     private JSONLoader loader;
-
-
 
     @BeforeEach
     void setUp(){
@@ -33,42 +31,49 @@ class SymbolToMathTextTest {
                 });
         loader = mock(JSONLoader.class);
         List<String[]> transforms = Arrays.asList(
-                new String[]{" większe ", ">"},
-                new String[]{" mniejsze ", "<"},
-                new String[]{" równe ","="},
-                new String[]{" nie równe ","!="},
-                new String[]{" dodać ", "+"},
-                new String[]{" plus ", "+"},
-                new String[]{" minus ", "-"},
-                new String[]{" odjąć ", "-"},
-                new String[]{" razy ", "*"},
-                new String[]{" podzielić przez ", "/"}
+                new String[]{"np.", "na przykład"},
+                new String[]{"m.in.", "między innymi"},
+                new String[]{"itd.","i tak dalej"},
+                new String[]{"prof.","profesor"},
+                new String[]{"dr", "doktor"},
+                new String[]{"itp.", "i tym podobne"}
         );
         List<List<String>> transformsList = new ArrayList<>();
         for (String[] transform : transforms) {
             transformsList.add(Arrays.asList(transform));
         }
         when(loader.getJSONList()).thenReturn(transformsList);
-        symboltotext = new SymbolToMathText(textTransform, loader);
+        collapse = new Collapse(textTransform, loader);
     }
 
     @Test
-    void testOperationWhenMoreEqual() {
-        assertEquals("a większe  równe 6", symboltotext.operation("a>=6"));
+    void testOperationWhenAllLower(){
+        assertEquals("np.", collapse.operation("na przykład"));
     }
 
     @Test
-    void testOperationWhenNotEqual() {
-        assertEquals("1 nie równe 2", symboltotext.operation("1!=2"));
+    void testOperationWhenFirstLetterCapital(){
+        assertEquals("Itp.", collapse.operation("I tym podobne"));
     }
 
     @Test
-    void testOperationWhenMinus() {
-        assertEquals("3 dodać 5", symboltotext.operation("3+5"));
+    void testOperationWhenAllUpper(){
+        assertEquals("ITD.", collapse.transform("I TAK DALEJ"));
     }
 
     @Test
     void testOperationWhenNoChange(){
-        assertEquals("&^ brak zmian", symboltotext.operation("&^ brak zmian"));
+        assertEquals("Tu nie ma nic do zmiany i t d.", collapse.transform("Tu nie ma nic do zmiany i t d."));
     }
+
+    @Test
+    void testOperationWhenEmptyString(){
+        assertEquals("", collapse.transform(""));
+    }
+
+    @Test
+    void testOperationWhenNull(){
+        assertThrows(NullPointerException.class, () -> { collapse.operation(null); });
+    }
+
 }

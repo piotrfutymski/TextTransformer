@@ -1,19 +1,12 @@
 package pl.put.poznan.transformer.logic;
 
-import java.io.*;
-import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import static java.lang.Character.isUpperCase;
-import static java.util.Arrays.asList;
-
-import org.apache.commons.lang3.StringUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides implementation of expand operation and a method for reading JSON file containing collapsed and extended versions
@@ -24,42 +17,10 @@ public class Expand extends TextDecorator {
     public Expand(TextTransform t) {
         super(t);
     }
+    public Expand(TextTransform t, JSONLoader loader){ super(t); this.loader = loader;}
     private static final Logger logger = LoggerFactory.getLogger(NumberToText.class);
-    public List<List<String>> expandCollapseList;
-
-    /**
-     * Reads expand-collapse.json file. Sets private class variable expandCollapseList.
-     */
-    public void readExpandCollapseList(){
-        logger.debug("Reading from JSON file started.");
-        expandCollapseList = new ArrayList<List<String>>();
-        JSONParser jsonParser = new JSONParser();
-        try{
-            //String filePath = new File("").getAbsolutePath();
-            InputStream input = getClass().getResourceAsStream("/expand-collapse.json");
-            Reader reader = new InputStreamReader(input);
-            Object obj = jsonParser.parse(reader);
-            JSONArray equalityList = (JSONArray) obj;
-            for(Object equality: equalityList){
-                JSONObject jsonContainer = (JSONObject) equality;
-                JSONObject jsonEquality = (JSONObject) jsonContainer.get("equality");
-                String collapsed = (String) jsonEquality.get("collapsed");
-                String extended = (String) jsonEquality.get("extended");
-                expandCollapseList.add(new ArrayList<String>(asList(collapsed, extended)));
-            }
-            reader.close();
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        catch(ParseException e){
-            e.printStackTrace();
-        }
-        logger.debug("Reading from JSON file finished.");
-    }
+    private JSONLoader loader;
+    private List<List<String>> expandCollapseList;
 
     /**
      * Changes are occurences of pre-definied phrases to their longer versions. If
@@ -69,7 +30,11 @@ public class Expand extends TextDecorator {
      */
     @Override
     protected String operation(String text) {
-        readExpandCollapseList();
+        if(this.loader == null){
+            loader = new JSONLoader();
+            loader.readExpandCollapseList();
+        }
+        expandCollapseList = loader.getJSONList();
         String copy;
         logger.debug("Expand operation started.");
         for(List<String> equality: expandCollapseList){
